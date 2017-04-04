@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+ <script src="https://unpkg.com/@reactivex/rxjs@5.0.3/dist/global/Rx.js"></script>
+ <title>Rx Examples</title>
+ <style media="screen">
+   .container{
+      background-color: aliceblue;
+      overflow: hidden;
+   }
+   .view,.console{
+      height: 800px;
+      overflow-y: auto;
+      float: left;
+      border-radius: 5px;
+      padding: 10px;
+      border: 4px solid #ab9393;
+   }
+   .container .view{
+       width: 60%;
+   }
+   .container .console{
+     margin-left: 20px;
+     width: 30%;
+   }
+   #pen{
+     word-wrap: break-word;
+   }
+ </style>
+</head>
+<body>
+    <div class="container">
+      <div class="view">
+        <h1>-:Rx examples:-</h1>
+
+        <h2>Example: 1. Event capture</h2>
+        <button type="button" name="button" id="firstBtn">First Btn</button>
+        <textarea name="name" rows="8" cols="80" id="mousemove">Move your mouse here</textarea>
+      </div>
+      <div class="console">
+        <button type="button" name="button" id="clear">Clear all</button>
+        <div id="pen"></div>
+      </div>
+   </div>
+</body>
+<script type="text/javascript" src="rx-demo-all.js"></script>
+</html>
