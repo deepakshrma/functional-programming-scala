@@ -137,5 +137,46 @@ const init = (_win, _$) => {
       };
     });
     distance.subscribe(x => log("pairwise: ",x));
+
+    var seconds = Ob.interval(1000);
+    var clicks = Ob.fromEvent(_$, 'click');
+    var result = seconds.sample(clicks);
+    result.subscribe(x => log("sample: "+x));
+
+    //subscribe with object:
+    var observable = Ob.create(function (observer) {
+      observer.next(1);
+      observer.next(2);
+      observer.next(3);
+      setTimeout(() => {
+        observer.next(4);
+        observer.complete();
+      }, 1000);
+    });
+
+    console.log('just before subscribe');
+    observable.subscribe({
+      next: x => log('got value ' + x),
+      error: err => console.error('something wrong occurred: ' + err),
+      complete: () => log('done'),
+    });
+    console.log('just after subscribe');
+    //Child subscription, add remove
+    var observable1 = Rx.Observable.interval(400);
+    var observable2 = Rx.Observable.interval(300);
+
+    var subscription = observable1.subscribe(x => log('first: ' + x));
+    var childSubscription = observable2.subscribe(x => log('second: ' + x));
+
+    subscription.add(childSubscription);
+
+    setTimeout(() => {
+      subscription.remove(childSubscription);
+    }, 1000);
+
+    setTimeout(() => {
+      // Unsubscribes BOTH subscription and childSubscription
+      subscription.unsubscribe();
+    }, 3000);
 }
 setTimeout(init, 1000, window, window.document);
