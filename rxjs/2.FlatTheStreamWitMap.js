@@ -1,22 +1,28 @@
 const Rx = require("rx");
-require("jsdom").env("", function(err, window) {
-    if (err) {
-        console.error(err);
-        return;
-    }
+const axios = require("axios");
+const jsdom = require("jsdom");
+const {
+    JSDOM
+} = jsdom;
+const {
+    window
+} = new JSDOM();
 
-    var $ = require("jquery")(window);
+// var $ = require("jquery")(window);
 
+//jquery in node
 
-    //jquery in node
+//start from here
 
-    //start from here
+const requestStream = Rx.Observable.just("https://jsonplaceholder.typicode.com/posts/1");
 
-    const requestStream = Rx.Observable.just('https://api.github.com/users');
+const responseStream = requestStream.flatMap(requestUrl =>
+    Rx.Observable.fromPromise(fetch(requestUrl))
+);
 
-    const responseStream = requestStream.flatMap(requestUrl => Rx.Observable.fromPromise($.getJSON(requestUrl)));
-
-    responseStream.subscribe(res =>{
-         console.log(res);
-    });
+responseStream.subscribe(res => {
+    console.log(res);
 });
+function fetch(url) {
+    return axios.get(url).then(x=>x.data)
+}

@@ -2,7 +2,7 @@ const Rx = require("rx");
 let source = Rx.Observable.create((obserable)=>{
       const id = setTimeout(()=>{
         try{
-            throw "Something bad happend";
+            // throw "Something bad happend";
             console.log("Inside timeout");
             obserable.onNext("42");
             obserable.completed();

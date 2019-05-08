@@ -13,7 +13,7 @@ function sendValues(arr){
 let count =0
 
 clicks.scan((s)=>s+1, 0)
-  //.buffer(open) //using open interval Observal
-  .buffer(clicks.throttle(1000)) //using open interval Observal
+  // .buffer(open) //using open interval Observal
+  .buffer(clicks.throttleTime(1000)) //using open interval Observal
   .filter( x => x.length > 0)
   .forEach(sendValues);
